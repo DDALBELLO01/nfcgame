@@ -85,7 +85,7 @@
             let currentValue = document.getElementById("nfcValue").textContent;
             if (currentValue === "0") {
                 document.getElementById("nfcValue").textContent = num;
-            } else {
+            } else if (currentValue.length < 4) {
                 document.getElementById("nfcValue").textContent += num;
             }
         }
