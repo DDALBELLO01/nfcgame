@@ -36,12 +36,25 @@
         }
         .btn-primary { background: #007bff; color: white; }
         .btn-danger { background: #dc3545; color: white; }
-        .btn-toggle { background: #555; color: white; }
+        .btn-toggle {
+            background: #555;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+        }
         .dark-mode .btn-toggle { background: #ddd; color: black; }
         .numpad button {
-            width: 60px;
-            height: 60px;
-            font-size: 18px;
+            width: 70px;
+            height: 70px;
+            font-size: 24px;
+            font-weight: bold;
+            font-family: 'Arial Rounded MT Bold', sans-serif;
+            border-radius: 10px;
         }
         #nfcValue {
             font-size: 24px;
@@ -112,7 +125,6 @@
     </script>
 </head>
 <body>
-    <button class="btn-toggle" onclick="toggleTheme()">🌙/☀️</button>
     <div class="container">
         <h1>NFC Tag Reader</h1>
         <p>Valore sul tag: <span id="nfcValue">0</span></p>
@@ -131,6 +143,7 @@
         </div>
         <button class="btn-primary" onclick="writeNFC(parseInt(document.getElementById('nfcValue').textContent))">Salva</button>
         <button class="btn-danger" onclick="writeNFC(0)">Resetta</button>
+        <button class="btn-toggle" onclick="toggleTheme()">🌙</button>
     </div>
 </body>
 </html>
