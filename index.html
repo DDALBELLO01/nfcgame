@@ -69,7 +69,9 @@
         }
 
         async function writeNFC(value) {
-            if (!ndef) return alert("Avvia prima la lettura NFC!");
+            if (!ndef) {
+                await startNFC();
+            }
             try {
                 await ndef.write({records: [{recordType: "text", data: value.toString()}]});
                 document.getElementById("nfcValue").textContent = value;
@@ -82,12 +84,13 @@
         function setValue(num) {
             document.getElementById("nfcValue").textContent = num;
         }
+
+        window.onload = startNFC;
     </script>
 </head>
 <body>
     <div class="container">
         <h1>NFC Tag Reader</h1>
-        <button class="btn-primary" onclick="startNFC()">Avvia Lettura NFC</button>
         <p>Valore sul tag: <span id="nfcValue">0</span></p>
         <div class="numpad">
             <button onclick="setValue(1)">1</button>
