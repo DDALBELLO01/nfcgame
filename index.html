@@ -81,8 +81,17 @@
             }
         }
 
-        function setValue(num) {
-            document.getElementById("nfcValue").textContent = num;
+        function appendValue(num) {
+            let currentValue = document.getElementById("nfcValue").textContent;
+            if (currentValue === "0") {
+                document.getElementById("nfcValue").textContent = num;
+            } else {
+                document.getElementById("nfcValue").textContent += num;
+            }
+        }
+
+        function clearValue() {
+            document.getElementById("nfcValue").textContent = "0";
         }
 
         window.onload = startNFC;
@@ -93,16 +102,17 @@
         <h1>NFC Tag Reader</h1>
         <p>Valore sul tag: <span id="nfcValue">0</span></p>
         <div class="numpad">
-            <button onclick="setValue(1)">1</button>
-            <button onclick="setValue(2)">2</button>
-            <button onclick="setValue(3)">3</button><br>
-            <button onclick="setValue(4)">4</button>
-            <button onclick="setValue(5)">5</button>
-            <button onclick="setValue(6)">6</button><br>
-            <button onclick="setValue(7)">7</button>
-            <button onclick="setValue(8)">8</button>
-            <button onclick="setValue(9)">9</button><br>
-            <button onclick="setValue(0)">0</button>
+            <button onclick="appendValue(1)">1</button>
+            <button onclick="appendValue(2)">2</button>
+            <button onclick="appendValue(3)">3</button><br>
+            <button onclick="appendValue(4)">4</button>
+            <button onclick="appendValue(5)">5</button>
+            <button onclick="appendValue(6)">6</button><br>
+            <button onclick="appendValue(7)">7</button>
+            <button onclick="appendValue(8)">8</button>
+            <button onclick="appendValue(9)">9</button><br>
+            <button onclick="appendValue(0)">0</button>
+            <button class="btn-danger" onclick="clearValue()">C</button>
         </div>
         <button class="btn-primary" onclick="writeNFC(parseInt(document.getElementById('nfcValue').textContent))">Salva</button>
         <button class="btn-danger" onclick="writeNFC(0)">Resetta</button>
