@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NFC Tag Reader</title>
+    <script>
+        let ndef;
+
+        async function startNFC() {
+            if ('NDEFReader' in window) {
+                try {
+                    ndef = new NDEFReader();
+                    await ndef.scan();
+                    ndef.onreading = event => readNFC(event);
+                    console.log("NFC attivo, avvicina un tag");
+                } catch (error) {
+                    console.error("Errore NFC:", error);
+                }
+            } else {
+                alert("Il tuo dispositivo non supporta NFC");
+            }
+        }
+
+        async function readNFC(event) {
+            const decoder = new TextDecoder();
+            for (const record of event.message.records) {
+                if (record.recordType === "text") {
+                    let value = parseInt(decoder.decode(record.data)) || 0;
+                    document.getElementById("nfcValue").textContent = value;
+                }
+            }
+        }
+
+        async function writeNFC(value) {
+            if (!ndef) return alert("Avvia prima la lettura NFC!");
+            try {
+                await ndef.write({records: [{recordType: "text", data: value.toString()}]});
+                document.getElementById("nfcValue").textContent = value;
+                alert("Valore aggiornato a " + value);
+            } catch (error) {
+                console.error("Errore scrittura NFC:", error);
+            }
+        }
+
+        function updateValue(amount) {
+            let current = parseInt(document.getElementById("nfcValue").textContent) || 0;
+            writeNFC(current + amount);
+        }
+    </script>
+</head>
+<body>
+    <h1>NFC Tag Reader</h1>
+    <button onclick="startNFC()">Avvia Lettura NFC</button>
+    <p>Valore sul tag: <span id="nfcValue">0</span></p>
+    <button onclick="updateValue(1)">Aggiungi 1</button>
+    <button onclick="updateValue(-1)">Sottrai 1</button>
+    <button onclick="writeNFC(0)">Resetta</button>
+</body>
+</html>
