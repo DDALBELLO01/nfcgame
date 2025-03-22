@@ -113,7 +113,7 @@
                 await startNFC();
             }
             try {
-                const url = "https://www.instagram.com/_Davide.2001";
+                const url = "instagram://user?username=_Davide.2001";
                 await ndef.write({records: [{recordType: "url", data: url}]});
                 alert("Tag NFC aggiornato per aprire Instagram");
             } catch (error) {
