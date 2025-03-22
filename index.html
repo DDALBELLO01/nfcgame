@@ -62,6 +62,10 @@
             display: block;
             margin: 10px 0;
         }
+        .instagram-icon {
+            width: 30px;
+            height: 30px;
+        }
     </style>
     <script>
         let ndef;
@@ -99,6 +103,19 @@
                 await ndef.write({records: [{recordType: "text", data: value.toString()}]});
                 document.getElementById("nfcValue").textContent = value;
                 alert("Valore aggiornato a " + value);
+            } catch (error) {
+                console.error("Errore scrittura NFC:", error);
+            }
+        }
+
+        async function writeInstagramLink() {
+            if (!ndef) {
+                await startNFC();
+            }
+            try {
+                const url = "https://www.instagram.com/_Davide.2001";
+                await ndef.write({records: [{recordType: "url", data: url}]});
+                alert("Tag NFC aggiornato per aprire Instagram");
             } catch (error) {
                 console.error("Errore scrittura NFC:", error);
             }
@@ -143,6 +160,9 @@
         </div>
         <button class="btn-primary" onclick="writeNFC(parseInt(document.getElementById('nfcValue').textContent))">Salva</button>
         <button class="btn-danger" onclick="writeNFC(0)">Resetta</button>
+        <button class="btn-primary" onclick="writeInstagramLink()">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" alt="Instagram" class="instagram-icon">
+        </button>
         <button class="btn-toggle" onclick="toggleTheme()">🌙</button>
     </div>
 </body>
